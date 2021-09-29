@@ -10,12 +10,12 @@ uses
 type
   TMessageSentEvent = procedure(message: string);
 
-  // Интерфейс обработчика событий.
+  // РРЅС‚РµСЂС„РµР№СЃ РѕР±СЂР°Р±РѕС‚С‡РёРєР° СЃРѕР±С‹С‚РёР№.
   IMessageListener = interface
     procedure OnMessageReceived(message: string);
   end;
 
-  // Поток обработки входящих событий.
+  // РџРѕС‚РѕРє РѕР±СЂР°Р±РѕС‚РєРё РІС…РѕРґСЏС‰РёС… СЃРѕР±С‹С‚РёР№.
   TListenerThread = class(TThread)
   protected
     procedure Execute; override;
@@ -25,7 +25,7 @@ type
     constructor Create(listener: IMessageListener; client: IStompClient);
   end;
 
-  // Базовый класс работы с очередью сообщений.
+  // Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ СЂР°Р±РѕС‚С‹ СЃ РѕС‡РµСЂРµРґСЊСЋ СЃРѕРѕР±С‰РµРЅРёР№.
   TMessageDispatcher = class abstract
   protected
     lClient: IStompClient;
@@ -35,7 +35,7 @@ type
       username: string; password: string);
   end;
 
-  // Класс для отправки сообщений.
+  // РљР»Р°СЃСЃ РґР»СЏ РѕС‚РїСЂР°РІРєРё СЃРѕРѕР±С‰РµРЅРёР№.
   TMessageSender = class(TMessageDispatcher)
   private
     FMessageSent: TMessageSentEvent;
@@ -45,7 +45,7 @@ type
       write FMessageSent;
   end;
 
-  // Класс для обработки входящих сообщений.
+  // РљР»Р°СЃСЃ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РІС…РѕРґСЏС‰РёС… СЃРѕРѕР±С‰РµРЅРёР№.
   TMessageReceiver = class(TMessageDispatcher)
   private
     listenerThread: TListenerThread;
