@@ -12,7 +12,7 @@ type
     database: TSqliteDatabase;
   public
     constructor Create(databasename : string);
-    procedure Write(message: string);
+    procedure Write(logDate:TDateTime; message: string);
   end;
 
 implementation
@@ -25,16 +25,14 @@ begin
   database.SetTimeout(1000);
 end;
 
-procedure TLogWriter.Write(message: string);
-var
-  myDate: TDateTime;
+procedure TLogWriter.Write(logDate:TDateTime; message: string);
 begin
   database.Start('', 'TRANSACTION');
-  database.AddParamText(':dt', FormatDateTime('dd.mm.yyyy hh:nn:ss', Now));
+  database.AddParamText(':dt', FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz', logDate));
   database.AddParamText(':msg', message);
   database.ExecSQL('INSERT INTO LOGS(DT,MSG) VALUES(:dt,:msg)');
   database.Commit('');
-  Writeln(Format('%s - %s', [FormatDateTime('dd.mm.yyyy hh:nn:ss', Now),
+  Writeln(Format('%s - %s', [FormatDateTime('dd.mm.yyyy hh:nn:ss', logDate),
     message]));
 end;
 

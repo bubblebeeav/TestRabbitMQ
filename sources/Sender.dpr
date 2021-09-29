@@ -19,7 +19,7 @@ var
   logMessage: string;
 begin
   logMessage := Format('Message sent "[%s]".', [message]);
-  Logger.Write(logMessage);
+  Logger.Write(Now, logMessage);
   WriteLn(output);
 end;
 

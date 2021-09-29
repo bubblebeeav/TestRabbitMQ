@@ -28,7 +28,7 @@ var
   logMessage: string;
 begin
   logMessage := Format('Message recieved "[%s]".', [message]);
-  lLogger.Write(logMessage);
+  lLogger.Write(Now, logMessage);
   WriteLn(output);
 end;
 
